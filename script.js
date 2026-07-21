@@ -273,3 +273,4 @@ console.log(
   'background: #1B3A6B; padding: 8px 16px; border-radius: 6px;'
 );
 console.log('%cWebsite loaded successfully.', 'color: #2C548F;');
+console.log('%cThis is a prototype — some content is placeholder.', 'color: #6B7690; font-style: italic;');
