@@ -5,6 +5,19 @@
 'use strict';
 
 /* ============================================================
+   0. MASTHEAD DATELINE — prints today's date, newspaper-style
+   ============================================================ */
+(function setMastheadDate() {
+  const el = document.getElementById('mastheadDate');
+  if (!el) return;
+  const today = new Date();
+  const formatted = today.toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+  el.textContent = `Jerusalem, Israel  \u2014  ${formatted}`;
+})();
+
+/* ============================================================
    1. HERO TYPING ANIMATION
    ============================================================ */
 
@@ -127,7 +140,7 @@ const sections   = document.querySelectorAll('section[id]');
  */
 function updateActiveNav() {
   let currentSection = '';
-  const scrollPos    = window.scrollY + 120; // offset for navbar height
+  const scrollPos    = window.scrollY + 140; // offset for navbar + masthead height
 
   sections.forEach(section => {
     const sectionTop    = section.offsetTop;
@@ -156,7 +169,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
     e.preventDefault();
 
-    const navHeight = navbar.offsetHeight;
+    const navHeight = navbar.offsetHeight + 34; // + masthead bar height
     const targetTop = target.getBoundingClientRect().top + window.scrollY - navHeight;
 
     window.scrollTo({ top: targetTop, behavior: 'smooth' });
