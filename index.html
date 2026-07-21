@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Church of God (Truth, Justice, and Righteousness)</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <!-- Google Fonts: Playfair Display for the masthead/headlines,
+       PT Serif for editorial body copy, Roboto for small caps/UI -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
@@ -15,6 +16,14 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+
+  <!-- ===================== MASTHEAD ===================== -->
+  <div class="masthead-bar" id="mastheadBar">
+    <div class="container masthead-inner">
+      <span class="masthead-date" id="mastheadDate">Jerusalem, Israel</span>
+      <span class="masthead-vol">Vol. I &middot; A Prototype Edition</span>
+    </div>
+  </div>
 
   <!-- ===================== NAVIGATION ===================== -->
   <nav class="navbar" id="navbar">
@@ -58,13 +67,14 @@
     </div>
   </nav>
 
-  <!-- ===================== HERO SECTION ===================== -->
+  <!-- ===================== HERO / FRONT PAGE ===================== -->
   <section class="hero" id="home">
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <div class="hero-logo-wrap">
         <img src="logo.jpg" alt="Church of God Logo" class="hero-logo" id="heroLogo"/>
       </div>
+      <p class="hero-kicker">The Official Record</p>
       <h1 class="hero-title" id="heroTitle"></h1>
       <p class="hero-subtitle" id="heroSubtitle"></p>
       <div class="hero-divider"></div>
@@ -89,7 +99,7 @@
       </div>
 
       <div class="about-intro animate-on-scroll">
-        <p>
+        <p class="drop-cap">
           <strong>The Church of God (Truth, Justice, and Righteousness)</strong>
         </p>
         <p style="margin-top: 16px; color: var(--slate-soft);">
