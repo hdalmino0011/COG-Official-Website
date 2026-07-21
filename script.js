@@ -1,5 +1,6 @@
 /* ============================================================
    CHURCH OF GOD (T.J.R) — WEBSITE JAVASCRIPT
+   Premium Magazine / Newspaper Edition
    ============================================================ */
 
 'use strict';
@@ -338,7 +339,7 @@ window.addEventListener('scroll', () => {
 console.log(
   '%c✝ Church of God (Truth, Justice, and Righteousness)',
   'color: #C9A227; font-size: 14px; font-weight: bold; ' +
-  'background: #1B3A6B; padding: 8px 16px; border-radius: 6px;'
+  'background: #1A2A4A; padding: 8px 16px; border-radius: 4px;'
 );
 console.log('%cWebsite loaded successfully.', 'color: #2C548F;');
-console.log('%cThis is a prototype — some content is placeholder.', 'color: #6B7690; font-style: italic;');
+console.log('%cThis is a prototype — some content is placeholder.', 'color: #8A8A8A; font-style: italic;');
