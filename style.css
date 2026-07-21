@@ -111,7 +111,7 @@ ul {
   color: rgba(255,255,255,0.65);
   text-transform: uppercase;
 }
-.masthead-vol{ color: var(--gold-soft); }
+.masthead-location{ color: rgba(255,255,255,0.85); font-weight: 500; }
 
 /* ============================================================
    NAVIGATION
@@ -1398,8 +1398,14 @@ ul {
    RESPONSIVE — MOBILE
    ============================================================ */
 @media (max-width: 640px) {
-  .masthead-inner{ font-size: 0.62rem; }
-  .masthead-vol{ display: none; }
+  .masthead-inner{ font-size: 0.6rem; gap: 8px; }
+  .masthead-location{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 55%;
+  }
+  .masthead-date{ white-space: nowrap; }
 
   .section { padding: 60px 0; }
 
