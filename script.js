@@ -5,16 +5,71 @@
 'use strict';
 
 /* ============================================================
-   0. MASTHEAD DATELINE — prints today's date, newspaper-style
+   0. MASTHEAD — visitor's real location (via geolocation, with a
+      timezone-based fallback if permission is denied) and a live
+      clock in the visitor's own local time, updated automatically
    ============================================================ */
-(function setMastheadDate() {
-  const el = document.getElementById('mastheadDate');
-  if (!el) return;
-  const today = new Date();
-  const formatted = today.toLocaleDateString('en-US', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  });
-  el.textContent = `Jerusalem, Israel  \u2014  ${formatted}`;
+(function initMasthead() {
+  const dateEl = document.getElementById('mastheadDate');
+  const locEl  = document.getElementById('mastheadLocation');
+  if (!dateEl && !locEl) return;
+
+  // --- Live local date & time, in the visitor's own timezone ---
+  function updateClock() {
+    if (!dateEl) return;
+    const now = new Date();
+    dateEl.textContent = now.toLocaleString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZoneName: 'short'
+    });
+  }
+  updateClock();
+  setInterval(updateClock, 30000); // keep it accurate without hammering the CPU
+
+  // --- Location: try the browser's Geolocation API + a free,
+  //     key-less reverse-geocoding lookup; fall back to a name
+  //     derived from the visitor's timezone if that's unavailable ---
+  function fallbackLocationFromTimezone() {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      const city = tz.split('/').pop().replace(/_/g, ' ');
+      return city || 'Local Edition';
+    } catch (e) {
+      return 'Local Edition';
+    }
+  }
+
+  if (!locEl) return;
+
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
+          .then((res) => res.json())
+          .then((data) => {
+            const city = data.city || data.locality || data.principalSubdivision;
+            const country = data.countryName;
+            locEl.textContent = (city && country) ? `${city}, ${country}` : fallbackLocationFromTimezone();
+          })
+          .catch(() => {
+            locEl.textContent = fallbackLocationFromTimezone();
+          });
+      },
+      () => {
+        // Permission denied or unavailable — fall back quietly, no error shown to the visitor
+        locEl.textContent = fallbackLocationFromTimezone();
+      },
+      { timeout: 6000 }
+    );
+  } else {
+    locEl.textContent = fallbackLocationFromTimezone();
+  }
 })();
 
 /* ============================================================
