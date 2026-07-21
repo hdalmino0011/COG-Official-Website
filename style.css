@@ -415,15 +415,32 @@ ul {
   transform: translateY(0);
 }
 
-/* Gold Divider — thick + thin double rule, classic broadsheet rubric */
-.hero-divider {
-  width: 120px;
-  height: 4px;
-  border-top: 2px solid var(--gold);
-  border-bottom: 1px solid var(--gold);
-  margin: 16px auto;
+/* Nameplate rule — a fleuron flanked by hairlines, the printer's
+   ornament that traditionally sits beneath a masthead */
+.hero-rule{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 340px;
+  margin: 18px auto;
   opacity: 0;
   animation: fadeIn 1s ease 2.8s forwards;
+}
+.hero-rule::before,
+.hero-rule::after{
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold));
+}
+.hero-rule::after{
+  background: linear-gradient(90deg, var(--gold), var(--gold), transparent);
+}
+.hero-rule-ornament{
+  color: var(--gold-soft);
+  font-size: 0.95rem;
+  flex-shrink: 0;
 }
 
 /* Tagline */
@@ -543,15 +560,27 @@ ul {
   margin-bottom: 16px;
 }
 
-/* Double rule — thick line over thin line, the broadsheet's own
-   section divider rather than a gradient bar */
+/* Fleuron ornament rule — a hairline with a centered printer's
+   mark, the section's own device, replacing a plain gradient bar */
 .title-underline {
-  width: 70px;
-  height: 6px;
+  position: relative;
+  width: 170px;
+  height: 1px;
   margin: 0 auto;
-  border-top: 3px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
+  background: linear-gradient(90deg, transparent, rgba(25,30,43,0.3), transparent);
 }
+.title-underline::before{
+  content: '\2726';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg);
+  padding: 0 14px;
+  color: var(--gold);
+  font-size: 0.85rem;
+}
+.section-alt .title-underline::before{ background: #EFEBE1; }
 
 /* ============================================================
    SCROLL ANIMATIONS
@@ -586,14 +615,14 @@ ul {
    ABOUT SECTION
    ============================================================ */
 .about-intro {
-  max-width: 700px;
-  margin: 0 auto 50px;
+  max-width: 640px;
+  margin: 0 auto 54px;
   text-align: left;
   font-size: 1.08rem;
   color: var(--text);
   font-family: var(--font-body);
 }
-.about-intro p:first-child{ text-align: center; font-size: 1.15rem; }
+.about-intro p:first-child{ text-align: center; font-size: 1.2rem; margin-bottom: 18px; }
 
 .about-grid {
   display: grid;
@@ -678,6 +707,17 @@ ul {
   color: var(--ink);
   font-style: italic;
   letter-spacing: 0.3px;
+  position: relative;
+}
+.mission-text::before{
+  content: '\201C';
+  font-family: 'Cormorant Garamond', serif;
+  font-style: normal;
+  font-size: 2.6rem;
+  color: var(--gold);
+  line-height: 0;
+  vertical-align: -0.32em;
+  margin-right: 4px;
 }
 
 /* ============================================================
@@ -724,15 +764,16 @@ ul {
 
 .belief-number {
   position: absolute;
-  top: 12px;
-  right: 18px;
-  font-size: 2.6rem;
-  font-family: var(--font-head);
+  top: 20px;
+  right: 22px;
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
   font-weight: 700;
-  color: var(--ink);
-  opacity: 0.06;
-  line-height: 1;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  opacity: 0.85;
 }
+.belief-number::before{ content: 'No. '; color: rgba(25,30,43,0.4); }
 
 .belief-icon {
   width: 50px;
@@ -767,78 +808,77 @@ ul {
    BIBLE VERSES SECTION
    ============================================================ */
 .verses-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(27,58,107,0.16);
 }
 
 .verse-card {
-  background: var(--white);
+  background: transparent;
   border-radius: 0;
-  padding: 42px 34px;
-  text-align: center;
+  padding: 34px 6px;
+  text-align: left;
   box-shadow: none;
-  border: 1px solid rgba(27,58,107,0.14);
-  transition: border-color var(--transition), transform var(--transition);
+  border: none;
+  border-bottom: 1px solid rgba(27,58,107,0.16);
+  transition: background var(--transition);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 4px 24px;
+  align-items: start;
 }
 
-.verse-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transition: transform 0.4s ease;
-}
-
-.verse-card:hover::after {
-  transform: scaleX(1);
-}
-
-.verse-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(27,58,107,0.3);
-}
+.verse-card:hover{ background: rgba(201,162,39,0.04); }
+.verse-card::after{ content: none; }
+.verse-card:hover::after{ transform: none; }
 
 .verse-icon {
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: transparent;
   border: 1.5px solid var(--gold);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 22px;
+  margin: 2px 0 0;
   color: var(--gold);
-  font-size: 1.1rem;
+  font-size: 1rem;
   box-shadow: none;
+  grid-row: 1 / 3;
 }
 
 .verse-text {
   font-family: var(--font-head);
-  font-size: 1rem;
-  color: var(--text);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  color: var(--ink);
   font-style: italic;
-  line-height: 1.8;
-  margin-bottom: 20px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+  position: relative;
+}
+.verse-text::before{
+  content: '\201C';
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  color: var(--gold);
+  line-height: 0;
+  vertical-align: -0.3em;
+  margin-right: 4px;
 }
 
 .verse-ref {
   font-family: var(--font-ui);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--primary);
   display: block;
-  padding-top: 14px;
-  border-top: 1px solid rgba(27,58,107,0.14);
+  padding-top: 0;
+  border-top: none;
 }
 
 /* ============================================================
@@ -866,8 +906,8 @@ ul {
 }
 
 .leader-avatar {
-  width: 84px;
-  height: 84px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
   background: var(--bg);
   display: flex;
@@ -876,7 +916,9 @@ ul {
   margin: 0 auto 20px;
   color: var(--primary);
   font-size: 1.9rem;
-  border: 2px solid var(--gold);
+  border: 1px solid var(--gold);
+  outline: 1px solid rgba(201,162,39,0.4);
+  outline-offset: 4px;
   box-shadow: none;
 }
 
@@ -918,35 +960,36 @@ ul {
 }
 
 .schedule-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(25,30,43,0.14);
 }
 
 .schedule-card {
-  background: var(--white);
-  border: 1px solid rgba(25,30,43,0.12);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(25,30,43,0.14);
   border-radius: 0;
-  padding: 30px 24px;
+  padding: 26px 6px;
   box-shadow: none;
   position: relative;
-  overflow: hidden;
-  transition: border-color var(--transition), transform var(--transition);
-  display: flex;
-  flex-direction: column;
+  overflow: visible;
+  transition: background var(--transition);
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  gap: 6px 22px;
   align-items: center;
-  text-align: center;
+  text-align: left;
 }
 
 .schedule-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--primary);
+  transform: none;
+  border-color: rgba(25,30,43,0.14);
+  background: rgba(27,58,107,0.03);
 }
 
 .schedule-day {
-  position: absolute;
-  top: 14px;
-  right: 14px;
+  position: static;
   font-family: var(--font-ui);
   font-size: 0.68rem;
   font-weight: 700;
@@ -955,13 +998,15 @@ ul {
   color: var(--primary);
   background: transparent;
   border: 1px solid var(--primary);
-  padding: 3px 10px;
+  padding: 5px 12px;
   border-radius: 0;
+  white-space: nowrap;
+  justify-self: end;
 }
 
 .schedule-icon {
-  width: 58px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: transparent;
   border: 1.5px solid var(--primary);
@@ -969,35 +1014,38 @@ ul {
   align-items: center;
   justify-content: center;
   color: var(--primary);
-  font-size: 1.3rem;
-  margin-bottom: 18px;
+  font-size: 1.15rem;
+  margin-bottom: 0;
   box-shadow: none;
+  grid-row: 1 / 2;
 }
+
+.schedule-info{ grid-column: 2 / 3; }
 
 .schedule-info h3 {
   font-family: var(--font-head);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: var(--primary);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .schedule-time {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
   font-family: var(--font-ui);
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 700;
   color: var(--gold);
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .schedule-desc {
   font-family: var(--font-body);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: var(--text);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 /* ============================================================
@@ -1189,6 +1237,24 @@ ul {
   background: var(--ink);
   color: rgba(255,255,255,0.72);
   border-top: 3px solid var(--gold);
+  position: relative;
+}
+.footer::before{
+  content: '\2726';
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 1px solid var(--gold);
+  color: var(--gold-soft);
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer-top {
@@ -1423,11 +1489,22 @@ ul {
   }
 
   .beliefs-grid,
-  .verses-grid,
-  .leadership-grid,
-  .schedule-grid {
+  .leadership-grid {
     grid-template-columns: 1fr;
   }
+
+  .verse-card{
+    grid-template-columns: 1fr;
+  }
+  .verse-icon{ grid-row: auto; margin-bottom: 10px; }
+
+  .schedule-card{
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .schedule-icon{ grid-row: auto; margin-bottom: 4px; }
+  .schedule-info{ grid-column: 1; }
+  .schedule-day{ justify-self: start; }
   .about-grid{ grid-template-columns: 1fr 1fr; }
 
   .contact-form-wrap {
